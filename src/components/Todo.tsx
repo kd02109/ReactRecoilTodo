@@ -1,10 +1,11 @@
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { reLocal } from "../localStorage";
-import { Categories, IToDo, toDoState } from "./atoms";
+import { categoriesState, IToDo, toDoState } from "./atoms";
 import DeletBtn from "./DeletBtn";
 
 function Todo({ text, category, id }: IToDo) {
   const setToDos = useSetRecoilState(toDoState);
+  const categories = useRecoilValue(categoriesState);
   const onClick = (newCategory: IToDo["category"]) => {
     console.log("i wanna to go", newCategory);
     setToDos((oldToDos) => {
@@ -22,16 +23,15 @@ function Todo({ text, category, id }: IToDo) {
   return (
     <li>
       {text}
-      {category !== Categories.DOING && (
-        <button onClick={() => onClick("DOING")}>Doing</button>
-      )}
-      {category !== Categories.TO_DO && (
-        <button onClick={() => onClick("TO_DO")}>TO DO</button>
-      )}
-      {category !== Categories.DONE && (
-        <button onClick={() => onClick("DONE")}>Done</button>
-      )}
-      <DeletBtn id={id} />
+      <div>
+        {categories.map(
+          (item) =>
+            category !== item && (
+              <button onClick={() => onClick(item)}>{item}</button>
+            )
+        )}
+        <DeletBtn id={id} />
+      </div>
     </li>
   );
 }
