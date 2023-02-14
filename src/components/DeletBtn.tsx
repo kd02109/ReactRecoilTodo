@@ -1,6 +1,7 @@
 import { useSetRecoilState } from "recoil";
 import { reLocal } from "../localStorage";
 import { IToDo, toDoState } from "./atoms";
+import { BtnDelet } from "./styledTag";
 
 interface IDeletBtn {
   id: number;
@@ -15,7 +16,7 @@ function DeletBtn({ id }: IDeletBtn) {
       return newTodo;
     });
   };
-  return <button onClick={() => onClick(id)}>❌</button>;
+  return <BtnDelet onClick={() => onClick(id)}>X</BtnDelet>;
 }
 
 export default DeletBtn;
